@@ -1,0 +1,16 @@
+3. Enable the Video Intelligence API
+
+Before you can begin using the Video Intelligence API, you must enable the API. You can enable the API by using the following command in the Cloud Shell:
+
+gcloud services enable videointelligence.googleapis.com
+Note: If this command ERRORs, check that the current Project ID matches your codelab Project ID.
+
+Use the following command to find the current Project ID being used by Cloud Shell:
+
+gcloud info | grep "project"
+
+If the Project ID is not correct, use the following command to use the correct Project ID:
+
+gcloud config set project <PROJECT_ID>
+
+Replace <PROJECT_ID> with the correct Project ID.
