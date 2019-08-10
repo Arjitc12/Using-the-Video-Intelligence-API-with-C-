@@ -1,0 +1,57 @@
+2. Setup and Requirements
+
+Self-paced environment setup
+If you don't already have a Google Account (Gmail or Google Apps), you must create one. Sign-in to Google Cloud Platform console (console.cloud.google.com) and create a new project:
+
+
+
+
+
+Remember the project ID, a unique name across all Google Cloud projects (the name above has already been taken and will not work for you, sorry!). It will be referred to later in this codelab as PROJECT_ID.
+
+Next, you'll need to enable billing in the Cloud Console in order to use Google Cloud resources.
+
+Running through this codelab shouldn't cost you more than a few dollars, but it could be more if you decide to use more resources or if you leave them running (see "cleanup" section at the end of this document).
+
+New users of Google Cloud Platform are eligible for a $300 free trial.
+
+Start Cloud Shell
+While Google Cloud can be operated remotely from your laptop, in this codelab you will be using Google Cloud Shell, a command line environment running in the Cloud.
+
+Activate Google Cloud Shell
+From the GCP Console click the Cloud Shell icon on the top right toolbar:
+
+
+
+Then click "Start Cloud Shell":
+
+
+
+It should only take a few moments to provision and connect to the environment:
+
+
+
+This virtual machine is loaded with all the development tools you'll need. It offers a persistent 5GB home directory, and runs on the Google Cloud, greatly enhancing network performance and authentication. Much, if not all, of your work in this lab can be done with simply a browser or your Google Chromebook.
+
+Once connected to the cloud shell, you should see that you are already authenticated and that the project is already set to your PROJECT_ID.
+
+Run the following command in the cloud shell to confirm that you are authenticated:
+
+gcloud auth list
+Command output
+
+Credentialed accounts:
+ - <myaccount>@<mydomain>.com (active)
+Note: gcloud is the powerful and unified command-line tool for Google Cloud Platform. Full documentation is available from https://cloud.google.com/sdk/gcloud. It comes pre-installed on Cloud Shell. You will notice its support for tab-completion.
+
+gcloud config list project
+Command output
+
+[core]
+project = <PROJECT_ID>
+If it is not, you can set it with this command:
+
+gcloud config set project <PROJECT_ID>
+Command output
+
+Updated property [core/project].
