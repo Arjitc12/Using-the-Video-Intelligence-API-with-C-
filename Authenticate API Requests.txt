@@ -1,0 +1,18 @@
+4. Authenticate API requests
+
+In order to make requests to the Video Intelligence API, you need to use a Service Account. A Service Account belongs to your project and it is used by the Google Client C# library to make Video Intelligence API requests. Like any other user account, a service account is represented by an email address. In this section, you will use the Cloud SDK to create a service account and then create credentials you will need to authenticate as the service account.
+
+First, set an environment variable with your PROJECT_ID which you will use throughout this codelab:
+
+export GOOGLE_CLOUD_PROJECT=$(gcloud config get-value core/project)
+Next, create a new service account to access the Video Intelligence API by using:
+
+gcloud iam service-accounts create my-video-int-sa \
+  --display-name "my video intelligence codelab service account"
+Next, create credentials that your C# code will use to login as your new service account. Create these credentials and save it as a JSON file "~/key.json" by using the following command:
+
+gcloud iam service-accounts keys create ~/key.json \
+  --iam-account  my-video-int-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com
+Finally, set the GOOGLE_APPLICATION_CREDENTIALS environment variable, which is used by the Video Intelligence API C# library, covered in the next step, to find your credentials. The environment variable should be set to the full path of the credentials JSON file you created, by using:
+
+export GOOGLE_APPLICATION_CREDENTIALS="/home/${USER}/key.json"
