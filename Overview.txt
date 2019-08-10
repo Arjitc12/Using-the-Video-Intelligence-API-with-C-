@@ -1,0 +1,25 @@
+Overview
+
+Google Cloud Video Intelligence API allows developers to use Google video analysis technology as part of their applications.
+
+It can be used to do:
+
+Label Detection: Detect objecs, such as dog, flower, human, in the video.
+Explicit Content Detection: Detect adult content within a video.
+Shot Change Detection: Detect scene changes within the video.
+The REST API enables users to annotate videos stored locally or in Google Cloud Storage with contextual information at the level of the entire video, per segment, per shot, and per frame.
+
+In this codelab, you will focus on using the Video Intelligence API with C#. You will learn how to analyze videos for labels, shot changes and explicit content detection.
+
+What you'll learn
+How to use the Cloud Shell
+How to enable the Video Intelligence API
+How to Authenticate API requests
+How to install the Google Cloud client library for C#
+How to analyze videos for labels
+How to analyze videos for shot changes
+How to analyze videos for explicit content detection
+What you'll need
+A Google Cloud Platform Project
+A Browser, such Chrome or Firefox
+Familiarity using C#
