@@ -1,0 +1,105 @@
+Label analysis detects labels in a video either stored locally or in Google Cloud Storage. In this section, you will analyze a video for labels stored in Google Cloud Storage.
+
+Note: We are using a pre-recorded video stored on Google Cloud Storage: gs://cloudmleap/video/next/gbikes_dinosaur.mp4. You can view the video before sending it to the Video Intelligence API here.
+
+First, open the code editor from the top right side of the Cloud Shell:
+
+
+
+Navigate to the Program.cs file inside the VideoIntApiDemo folder and replace the code with the following:
+
+using System;
+using System.Collections.Generic;
+using Google.Cloud.VideoIntelligence.V1;
+
+namespace VideoIntApiDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var client = VideoIntelligenceServiceClient.Create();
+            var request = new AnnotateVideoRequest
+            {
+                InputUri = "gs://cloudmleap/video/next/gbikes_dinosaur.mp4",
+                Features = { Feature.LabelDetection }
+            };
+            var op = client.AnnotateVideo(request).PollUntilCompleted();
+            foreach (var result in op.Result.AnnotationResults)
+            {
+                PrintLabels("Video", result.SegmentLabelAnnotations);
+                PrintLabels("Shot", result.ShotLabelAnnotations);
+                PrintLabels("Frame", result.FrameLabelAnnotations);
+            }
+        }
+
+        static void PrintLabels(string labelName,
+            IEnumerable<LabelAnnotation> labelAnnotations)
+        {
+            foreach (var annotation in labelAnnotations)
+            {
+                Console.WriteLine($"{labelName} label: {annotation.Entity.Description}");
+                foreach (var entity in annotation.CategoryEntities)
+                {
+                    Console.WriteLine($"{labelName} label category: {entity.Description}");
+                }
+                foreach (var segment in annotation.Segments)
+                {
+                    Console.Write("Segment location: ");
+                    Console.Write(segment.Segment.StartTimeOffset);
+                    Console.Write(":");
+                    Console.WriteLine(segment.Segment.EndTimeOffset);
+                    Console.WriteLine($"Confidence: {segment.Confidence}");
+                }
+            }
+        }
+    }
+}
+Take a minute or two to study the code and see how the video is being labelled.
+
+Back in Cloud Shell, run the app:
+
+dotnet run
+It takes several seconds for Video Intelligence API to extract labels but eventually, you should see the following output:
+
+Video label: bicycle
+Video label category: vehicle
+Segment location: "0s":"42.766666s"
+Confidence: 0.475821
+Video label: tyrannosaurus
+Video label category: dinosaur
+Segment location: "0s":"42.766666s"
+Confidence: 0.4222222
+Video label: tree
+Video label category: plant
+Segment location: "0s":"42.766666s"
+Confidence: 0.4231415
+...
+Note: If this C# code does not work for you, verify the instructions you performed during Authenticate API requests step.
+
+Using the following command to verify the value of GOOGLE_APPLICATION_CREDENTIALS environment variable:
+
+echo GOOGLE_APPLICATION_CREDENTIALS
+
+It should output the value "~/key.json".
+
+If it does, next check that a service account was created and is located at "~/key.json" by using:
+
+cat "~/key.json"
+
+You should see something similar to:
+
+{
+
+"type": "service_account",
+
+"project_id": "PROJECT_ID",
+
+"private_key_id": "ff31939192529e07f42e4535fb20bb029def1276",
+
+"Private_key":...
+
+If you don't, revisit the Authenticate API requests step.
+
+Summary
+In this step, you were able to list all the labels in a video using the Video Intelligence API. You can read more on Label detection page.
