@@ -1,0 +1,44 @@
+You can use the Video Intelligence API to detect shot changes in a video stored locally or in Google Cloud Storage. In this section, you will perform video analysis for shot changes on a file located in Google Cloud Storage.
+
+To detect shot changes, navigate to the Program.cs file inside the VideoIntApiDemo folder and replace the code with the following:
+
+using System;
+using Google.Cloud.VideoIntelligence.V1;
+
+namespace VideoIntApiDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var client = VideoIntelligenceServiceClient.Create();
+            var request = new AnnotateVideoRequest
+            {
+                InputUri = "gs://cloudmleap/video/next/gbikes_dinosaur.mp4",
+                Features = { Feature.ShotChangeDetection }
+            };
+            var op = client.AnnotateVideo(request).PollUntilCompleted();
+            foreach (var result in op.Result.AnnotationResults)
+            {
+                foreach (var annotation in result.ShotAnnotations)
+                {
+                    Console.Out.WriteLine("Start Time Offset: {0}\tEnd Time Offset: {1}",
+                        annotation.StartTimeOffset, annotation.EndTimeOffset);
+                }
+            }
+        }
+    }
+}
+Take a minute or two to study the code and see how the shot detection is performed.
+
+Back in Cloud Shell, run the app. You should see the following output:
+
+dotnet run
+You should see the following output:
+
+Start Time Offset: "0s" End Time Offset: "5.166666s"
+Start Time Offset: "5.233333s"  End Time Offset: "10.066666s"
+Start Time Offset: "10.100s"    End Time Offset: "28.133333s"
+Start Time Offset: "28.166666s" End Time Offset: "42.766666s"
+Summary
+In this step, you were able to use the Video Intelligence API to detect shot changes in a file stored in Google Cloud Storage. Read more about Shot changes.
