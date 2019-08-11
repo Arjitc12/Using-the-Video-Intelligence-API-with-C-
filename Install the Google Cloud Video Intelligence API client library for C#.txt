@@ -1,0 +1,20 @@
+First, create a simple C# console application that you will use to run Video Intelligence API samples:
+
+dotnet new console -n VideoIntApiDemo
+You should see the application created and dependencies resolved:
+
+The template "Console Application" was created successfully.
+Processing post-creation actions...
+...
+Restore succeeded.
+Next, navigate to VideoIntApiDemo folder:
+
+cd VideoIntApiDemo/
+And add Google.Cloud.VideoIntelligence.V1 NuGet package to the project:
+
+dotnet add package Google.Cloud.VideoIntelligence.V1
+info : Adding PackageReference for package 'Google.Cloud.VideoIntelligence.V1' into project '/home/atameldev/VideoIntApiDemo/VideoIntApiDemo.csproj'.
+log  : Restoring packages for /home/atameldev/VideoIntApiDemo/VideoIntApiDemo.csproj...
+...
+info : PackageReference for package 'Google.Cloud.VideoIntelligence.V1' version '1.0.0' added to file '/home/atameldev/VideoIntApiDemo/VideoIntApiDemo.csproj'.
+Now, you're ready to use Video Intelligence API!
