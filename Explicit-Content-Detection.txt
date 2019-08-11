@@ -1,0 +1,56 @@
+Explicit Content Detection detects adult content within a video. Adult content is content generally appropriate for 18 years of age and older, including but not limited to nudity, sexual activities, and pornography (including cartoons or anime). The response includes a bucketized likelihood value, from VERY_UNLIKELY to VERY_LIKELY.
+
+When Explicit Content Detection evaluates a video, it does so on a per-frame basis and considers visual content only. The audio component of the video is not used to evaluate the explicit content level.
+
+To detect explicit content, navigate to the Program.cs file inside the VideoIntApiDemo folder and replace the code with the following:
+
+using System;
+using Google.Cloud.VideoIntelligence.V1;
+
+namespace VideoIntApiDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var client = VideoIntelligenceServiceClient.Create();
+            var request = new AnnotateVideoRequest
+            {
+                InputUri = "gs://cloudmleap/video/next/gbikes_dinosaur.mp4",
+                Features = { Feature.ExplicitContentDetection }
+            };
+            var op = client.AnnotateVideo(request).PollUntilCompleted();
+            foreach (var result in op.Result.AnnotationResults)
+            {
+                foreach (var frame in result.ExplicitAnnotation.Frames)
+                {
+                    Console.WriteLine("Time Offset: {0}", frame.TimeOffset);
+                    Console.WriteLine("Pornography Likelihood: {0}", frame.PornographyLikelihood);
+                    Console.WriteLine();
+                }
+            }
+        }
+    }
+}
+Take a minute or two to study the code and see how the explicit content detection was performed.
+
+Back in Cloud Shell, run the app:
+
+dotnet run
+It might take several seconds but eventually, you should see the following output:
+
+dotnet run
+
+Time Offset: "0.056149s"
+Pornography Likelihood: VeryUnlikely
+
+Time Offset: "1.166841s"
+Pornography Likelihood: VeryUnlikely
+...
+Time Offset: "41.678209s"
+Pornography Likelihood: VeryUnlikely
+
+Time Offset: "42.596413s"
+Pornography Likelihood: VeryUnlikely
+Summary
+In this step, you were able to perform explicit content detection on a video using the Video Intelligence API. Read more about Explicit content detection.
